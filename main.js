@@ -169,8 +169,8 @@ async function predict(input) {
         const percent = (prediction[i].probability * 100).toFixed(0);
         let className = prediction[i].className;
         
-        if (className === 'Class 1') className = 'Cat';
-        if (className === 'Class 2') className = 'Dog';
+        if (className === 'Class 1') className = 'Dog';
+        if (className === 'Class 2') className = 'Cat';
         
         labelContainer.childNodes[i].innerHTML = `
             <div class="bar-container">
