@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animal Look Test & Lotto</title>
     <link rel="stylesheet" href="style.css">
-    <!-- TensorFlow.js and Teachable Machine libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
@@ -13,25 +12,12 @@
     <button id="theme-toggle" class="theme-toggle">🌙</button>
     <main class="container">
         <h1 class="title">Animal Look Test</h1>
-        <p class="description">Upload your photo to find out if you look like a dog or a cat!</p>
+        <p class="description">Click Start to use your webcam and see if you look like a dog or a cat!</p>
         
         <section class="animal-test-section">
-            <div class="upload-area" id="upload-area">
-                <input type="file" id="image-upload" accept="image/*" hidden>
-                <div class="upload-label">
-                    <span>Click or Drag & Drop Photo</span>
-                </div>
-                <img id="image-preview" src="#" alt="Preview" style="display: none;">
-            </div>
-            
-            <div id="loading-spinner" style="display: none;">Loading Model...</div>
-            
-            <div id="result-container" class="result-container" style="display: none;">
-                <h3 id="result-message"></h3>
-                <div id="label-container" class="label-container"></div>
-            </div>
-            
-            <button class="test-btn" id="predict-btn" disabled>Wait for Model...</button>
+            <button type="button" class="test-btn" onclick="initAnimalModel()">Start Webcam</button>
+            <div id="webcam-container" class="webcam-container"></div>
+            <div id="label-container" class="label-container"></div>
         </section>
 
         <hr class="divider">
