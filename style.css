@@ -67,7 +67,7 @@ body {
     border-radius: 1rem;
     box-shadow: 0 10px 20px var(--shadow-color), 0 6px 6px var(--shadow-color);
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -137,7 +137,7 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.contact-section {
+.contact-section, .comment-section {
     text-align: left;
 }
 
