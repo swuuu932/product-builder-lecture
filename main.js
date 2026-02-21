@@ -57,51 +57,120 @@ const generateNumbers = () => {
 generateBtn.addEventListener('click', generateNumbers);
 generateNumbers();
 
-// Teachable Machine Webcam Logic
+// Teachable Machine Logic
 const URL = "https://teachablemachine.withgoogle.com/models/xrC062gbn/";
 let model, webcam, labelContainer, maxPredictions;
+let isWebcamRunning = false;
 
-async function initAnimalModel() {
+// Load the model
+async function loadModel() {
+    if (model) return;
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
-
-    // Load the model and metadata
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
+}
 
-    // Setup a webcam
-    const flip = true; 
+// Option Switching
+window.showOption = function(option) {
+    document.querySelectorAll('.test-option-content').forEach(el => el.style.display = 'none');
+    document.getElementById(option + '-option').style.display = 'block';
+    
+    document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('active'));
+    // Fixed: find the button that was clicked
+    const clickedBtn = Array.from(document.querySelectorAll('.option-btn')).find(btn => btn.textContent.toLowerCase().includes(option));
+    if (clickedBtn) clickedBtn.classList.add('active');
+    
+    // Stop webcam if switching to upload
+    if (option === 'upload' && isWebcamRunning) {
+        webcam.stop();
+        isWebcamRunning = false;
+        document.getElementById('webcam-container').innerHTML = '';
+        document.getElementById('webcam-start-btn').style.display = 'block';
+    }
+};
+
+// Webcam Logic
+window.initAnimalModel = async function() {
+    await loadModel();
+    const flip = true;
     webcam = new tmImage.Webcam(200, 200, flip);
-    await webcam.setup(); 
+    await webcam.setup();
     await webcam.play();
+    isWebcamRunning = true;
     window.requestAnimationFrame(loop);
 
-    // Append elements to the DOM
-    document.getElementById("webcam-container").innerHTML = '';
-    document.getElementById("webcam-container").appendChild(webcam.canvas);
+    document.getElementById('webcam-start-btn').style.display = 'none';
+    document.getElementById('webcam-container').innerHTML = '';
+    document.getElementById('webcam-container').appendChild(webcam.canvas);
     
-    labelContainer = document.getElementById("label-container");
+    labelContainer = document.getElementById('label-container');
     labelContainer.innerHTML = '';
     for (let i = 0; i < maxPredictions; i++) {
-        labelContainer.appendChild(document.createElement("div"));
+        labelContainer.appendChild(document.createElement('div'));
     }
-}
+};
 
 async function loop() {
+    if (!isWebcamRunning) return;
     webcam.update();
-    await predict();
+    await predict(webcam.canvas);
     window.requestAnimationFrame(loop);
 }
 
-async function predict() {
-    const prediction = await model.predict(webcam.canvas);
+// File Upload Logic
+const uploadArea = document.getElementById('upload-area');
+const imageUpload = document.getElementById('image-upload');
+const imagePreview = document.getElementById('image-preview');
+
+if (uploadArea) {
+    uploadArea.addEventListener('click', () => imageUpload.click());
+
+    imageUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                imagePreview.src = event.target.result;
+                imagePreview.style.display = 'block';
+                document.querySelector('.upload-label').style.display = 'none';
+                document.getElementById('label-container').innerHTML = '';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+window.predictImage = async function() {
+    if (!imagePreview.src || imagePreview.src.endsWith('#') || imagePreview.style.display === 'none') {
+        alert('Please upload a photo first!');
+        return;
+    }
+    
+    await loadModel();
+    labelContainer = document.getElementById('label-container');
+    labelContainer.innerHTML = 'Analyzing...';
+    
+    const tempImg = new Image();
+    tempImg.src = imagePreview.src;
+    tempImg.onload = async () => {
+        labelContainer.innerHTML = '';
+        for (let i = 0; i < maxPredictions; i++) {
+            labelContainer.appendChild(document.createElement('div'));
+        }
+        await predict(tempImg);
+    };
+};
+
+// Unified Prediction
+async function predict(input) {
+    const prediction = await model.predict(input);
     for (let i = 0; i < maxPredictions; i++) {
         const percent = (prediction[i].probability * 100).toFixed(0);
         let className = prediction[i].className;
         
-        // Map Class names to friendly names
-        if (className === "Class 1") className = "Cat";
-        if (className === "Class 2") className = "Dog";
+        if (className === 'Class 1') className = 'Cat';
+        if (className === 'Class 2') className = 'Dog';
         
         labelContainer.childNodes[i].innerHTML = `
             <div class="bar-container">

@@ -12,11 +12,30 @@
     <button id="theme-toggle" class="theme-toggle">🌙</button>
     <main class="container">
         <h1 class="title">Animal Look Test</h1>
-        <p class="description">Click Start to use your webcam and see if you look like a dog or a cat!</p>
+        <p class="description">Choose a method to see if you look like a dog or a cat!</p>
         
         <section class="animal-test-section">
-            <button type="button" class="test-btn" onclick="initAnimalModel()">Start Webcam</button>
-            <div id="webcam-container" class="webcam-container"></div>
+            <div class="test-options">
+                <button type="button" class="option-btn active" onclick="showOption('webcam')">Webcam</button>
+                <button type="button" class="option-btn" onclick="showOption('upload')">Upload Photo</button>
+            </div>
+
+            <div id="webcam-option" class="test-option-content">
+                <button type="button" class="test-btn" id="webcam-start-btn" onclick="initAnimalModel()">Start Webcam</button>
+                <div id="webcam-container" class="webcam-container"></div>
+            </div>
+
+            <div id="upload-option" class="test-option-content" style="display: none;">
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="image-upload" accept="image/*" hidden>
+                    <div class="upload-label">
+                        <span>Click or Drag & Drop Photo</span>
+                    </div>
+                    <img id="image-preview" src="#" alt="Preview" style="display: none;">
+                </div>
+                <button type="button" class="test-btn" id="predict-btn" onclick="predictImage()">Analyze Uploaded Photo</button>
+            </div>
+
             <div id="label-container" class="label-container"></div>
         </section>
 
