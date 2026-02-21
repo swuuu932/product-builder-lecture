@@ -97,7 +97,11 @@ async function predict() {
     const prediction = await model.predict(webcam.canvas);
     for (let i = 0; i < maxPredictions; i++) {
         const percent = (prediction[i].probability * 100).toFixed(0);
-        const className = prediction[i].className;
+        let className = prediction[i].className;
+        
+        // Map Class names to friendly names
+        if (className === "Class 1") className = "Cat";
+        if (className === "Class 2") className = "Dog";
         
         labelContainer.childNodes[i].innerHTML = `
             <div class="bar-container">
