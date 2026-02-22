@@ -8,40 +8,56 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animal Look Test & Lotto</title>
+    <title>Animal Look Test & Lotto Number Generator | Fun AI Tools</title>
+    <meta name="description" content="Discover which animal you resemble with our AI-powered Animal Look Test. Also, generate your lucky numbers with our fair Lotto Number Generator. Fun, free, and easy to use!">
+    <meta name="keywords" content="animal look test, face analysis, ai animal test, cat or dog, lotto generator, lucky numbers, random number generator, teachable machine">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
-    <button id="theme-toggle" class="theme-toggle">🌙</button>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">Animal Look & Lotto</div>
+            <ul class="nav-links">
+                <li><a href="#animal-test">Animal Test</a></li>
+                <li><a href="#lotto-generator">Lotto</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button id="theme-toggle" class="theme-toggle">🌙</button>
+    </header>
+
     <main class="container">
-        <h1 class="title">Animal Look Test</h1>
-        <p class="description">Choose a method to see if you look like a dog or a cat!</p>
-        
-        <section class="animal-test-section">
-            <div class="test-options">
-                <button type="button" class="option-btn active" onclick="showOption('webcam')">Webcam</button>
-                <button type="button" class="option-btn" onclick="showOption('upload')">Upload Photo</button>
-            </div>
-
-            <div id="webcam-option" class="test-option-content">
-                <button type="button" class="test-btn" id="webcam-start-btn" onclick="initAnimalModel()">Start Webcam</button>
-                <div id="webcam-container" class="webcam-container"></div>
-            </div>
-
-            <div id="upload-option" class="test-option-content" style="display: none;">
-                <div class="upload-area" id="upload-area">
-                    <input type="file" id="image-upload" accept="image/*" hidden>
-                    <div class="upload-label">
-                        <span>Click or Drag & Drop Photo</span>
-                    </div>
-                    <img id="image-preview" src="#" alt="Preview" style="display: none;">
+        <section id="animal-test" class="section">
+            <h1 class="title">Animal Look Test</h1>
+            <p class="description">Discover which animal you resemble most! Using advanced AI technology from Google's Teachable Machine, our tool analyzes your facial features to find your animal counterpart. Whether it's the playful spirit of a dog or the elegant grace of a cat, find out now!</p>
+            
+            <section class="animal-test-section">
+                <div class="test-options">
+                    <button type="button" class="option-btn active" onclick="showOption('webcam')">Webcam</button>
+                    <button type="button" class="option-btn" onclick="showOption('upload')">Upload Photo</button>
                 </div>
-                <button type="button" class="test-btn" id="predict-btn" onclick="predictImage()">Analyze Uploaded Photo</button>
-            </div>
 
-            <div id="label-container" class="label-container"></div>
+                <div id="webcam-option" class="test-option-content">
+                    <button type="button" class="test-btn" id="webcam-start-btn" onclick="initAnimalModel()">Start Webcam</button>
+                    <div id="webcam-container" class="webcam-container"></div>
+                </div>
+
+                <div id="upload-option" class="test-option-content" style="display: none;">
+                    <div class="upload-area" id="upload-area">
+                        <input type="file" id="image-upload" accept="image/*" hidden>
+                        <div class="upload-label">
+                            <span>Click or Drag & Drop Photo</span>
+                        </div>
+                        <img id="image-preview" src="#" alt="Preview" style="display: none;">
+                    </div>
+                    <button type="button" class="test-btn" id="predict-btn" onclick="predictImage()">Analyze Uploaded Photo</button>
+                </div>
+
+                <div id="label-container" class="label-container"></div>
+            </section>
         </section>
 
         <!-- AdSense Display Ad Placeholder -->
@@ -59,14 +75,29 @@
 
         <hr class="divider">
 
-        <h1 class="title">Lotto Number Generator</h1>
-        <section class="number-display"></section>
-        <button class="generate-btn">Generate Numbers</button>
+        <section id="lotto-generator" class="section">
+            <h1 class="title">Lotto Number Generator</h1>
+            <p class="description">Feeling lucky? Use our random number generator to pick your next winning set of numbers. Our algorithm ensures a fair and unbiased selection, helping you try your luck with a completely fresh perspective.</p>
+            <section class="number-display"></section>
+            <button class="generate-btn">Generate Numbers</button>
+        </section>
         
         <hr class="divider">
         
-        <section class="contact-section">
+        <section id="about" class="section about-section">
+            <h2 class="subtitle">About Our Tools</h2>
+            <div class="about-content">
+                <p>Our platform is dedicated to providing fun and interactive tools for everyday use. We combine modern web technologies with a user-centric design to ensure a high-quality experience.</p>
+                <p><strong>Animal Look Test:</strong> This tool uses a pre-trained machine learning model from Google's Teachable Machine. It processes your image locally in your browser, ensuring that your privacy is maintained while providing instant feedback.</p>
+                <p><strong>Lotto Generator:</strong> A simple yet effective tool for those who enjoy the thrill of the lottery. It generates 6 unique numbers between 1 and 45, following standard lottery formats.</p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section id="contact" class="contact-section section">
             <h2 class="subtitle">Affiliate Inquiry</h2>
+            <p class="description">Have questions, feedback, or business inquiries? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.</p>
             <form action="https://formspree.io/f/xaqdpeev" method="POST" class="contact-form">
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -86,7 +117,7 @@
 
         <hr class="divider">
 
-        <section class="comment-section">
+        <section class="comment-section section">
             <h2 class="subtitle">Comments</h2>
             <div id="disqus_thread"></div>
             <script>
@@ -100,6 +131,16 @@
             <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </section>
     </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Animal Look & Lotto. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+            </ul>
+        </div>
+    </footer>
     <script src="main.js"></script>
 </body>
 </html>
