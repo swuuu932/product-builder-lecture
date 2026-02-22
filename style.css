@@ -219,6 +219,30 @@ body {
     left: 0;
 }
 
+.safety-section {
+    text-align: left;
+}
+
+.safety-list {
+    list-style: none;
+    padding: 0;
+}
+
+.safety-list li {
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    background-color: var(--background-color);
+    border-radius: 0.5rem;
+    border-left: 4px solid var(--secondary-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.safety-list li::before {
+    content: "🛡️";
+    margin-right: 0.8rem;
+}
+
 @media (max-width: 600px) {
     .header {
         flex-direction: column;
