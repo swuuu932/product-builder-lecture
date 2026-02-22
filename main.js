@@ -1,6 +1,101 @@
 const numberDisplay = document.querySelector('.number-display');
 const generateBtn = document.querySelector('.generate-btn');
 const themeToggle = document.getElementById('theme-toggle');
+const langToggle = document.getElementById('lang-toggle');
+
+// Translation Data
+const translations = {
+    ko: {
+        nav_animal: "동물상 테스트",
+        nav_lotto: "로또 번호",
+        nav_about: "정보",
+        nav_contact: "문의",
+        title_animal: "동물상 테스트",
+        desc_animal: "당신은 어떤 동물을 닮았나요? 구글의 인공지능 기술을 활용해 얼굴 특징을 분석하고 가장 닮은 동물을 찾아보세요. 강아지의 명랑함부터 고양이의 우아함까지, 지금 바로 확인해보세요!",
+        webcam_btn: "웹캠 시작",
+        upload_btn: "사진 업로드",
+        upload_label: "사진을 클릭하거나 드래그하여 업로드하세요",
+        analyze_btn: "업로드된 사진 분석",
+        title_lotto: "로또 번호 생성기",
+        desc_lotto: "행운을 시험해보세요! 저희의 알고리즘은 공정하고 편향되지 않은 번호 선택을 보장합니다. 새로운 마음으로 행운의 번호를 뽑아보세요.",
+        generate_btn: "번호 생성하기",
+        subtitle_about: "도구 정보 및 팁",
+        about_text: "저희 플랫폼은 일상에서 즐길 수 있는 재미있고 인터랙티브한 도구를 제공합니다.",
+        animal_tip_title: "동물상 테스트 팁:",
+        animal_tip_1: "밝은 곳에서 정면을 보고 촬영하면 더 정확합니다.",
+        animal_tip_2: "안경이나 모자를 벗고 촬영해보세요.",
+        lotto_tip_title: "로또 생성기 안내:",
+        lotto_tip_1: "1부터 45 사이의 중복되지 않는 6개 숫자를 생성합니다.",
+        lotto_tip_2: "생성된 번호는 단순 참고용이며 당첨을 보장하지 않습니다.",
+        subtitle_contact: "제휴 및 문의",
+        desc_contact: "질문, 피드백 또는 비즈니스 문의가 있으신가요? 아래 양식을 작성해 주시면 신속히 답변해 드리겠습니다.",
+        form_name: "이름",
+        form_email: "이메일",
+        form_message: "메시지",
+        form_submit: "문의 보내기",
+        subtitle_comments: "댓글",
+        footer_rights: "모든 권리 보유.",
+        privacy: "개인정보처리방침",
+        terms: "이용약관"
+    },
+    en: {
+        nav_animal: "Animal Test",
+        nav_lotto: "Lotto",
+        nav_about: "About",
+        nav_contact: "Contact",
+        title_animal: "Animal Look Test",
+        desc_animal: "Discover which animal you resemble most! Using advanced AI technology from Google's Teachable Machine, find out if you have the playful spirit of a dog or the elegant grace of a cat.",
+        webcam_btn: "Start Webcam",
+        upload_btn: "Upload Photo",
+        upload_label: "Click or Drag & Drop Photo",
+        analyze_btn: "Analyze Uploaded Photo",
+        title_lotto: "Lotto Number Generator",
+        desc_lotto: "Feeling lucky? Use our random number generator to pick your next winning set of numbers. Our algorithm ensures a fair and unbiased selection.",
+        generate_btn: "Generate Numbers",
+        subtitle_about: "About & Tips",
+        about_text: "Our platform is dedicated to providing fun and interactive tools for everyday use with high-quality experience.",
+        animal_tip_title: "Animal Test Tips:",
+        animal_tip_1: "Best results in bright environments facing forward.",
+        animal_tip_2: "Try removing glasses or hats for better accuracy.",
+        lotto_tip_title: "Lotto Generator Info:",
+        lotto_tip_1: "Generates 6 unique numbers between 1 and 45.",
+        lotto_tip_2: "Numbers are for entertainment and don't guarantee winning.",
+        subtitle_contact: "Affiliate Inquiry",
+        desc_contact: "Have questions, feedback, or business inquiries? Fill out the form below and we'll get back to you soon.",
+        form_name: "Name",
+        form_email: "Email",
+        form_message: "Message",
+        form_submit: "Send Inquiry",
+        subtitle_comments: "Comments",
+        footer_rights: "All rights reserved.",
+        privacy: "Privacy Policy",
+        terms: "Terms of Service"
+    }
+};
+
+let currentLang = localStorage.getItem('lang') || 'ko';
+
+const updateLanguage = () => {
+    const lang = translations[currentLang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (lang[key]) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = lang[key];
+            } else {
+                el.innerText = lang[key];
+            }
+        }
+    });
+    langToggle.textContent = currentLang === 'ko' ? '🇺🇸 EN' : '🇰🇷 KO';
+    document.documentElement.lang = currentLang;
+};
+
+langToggle.addEventListener('click', () => {
+    currentLang = currentLang === 'ko' ? 'en' : 'ko';
+    localStorage.setItem('lang', currentLang);
+    updateLanguage();
+});
 
 // Theme Toggle Logic
 const toggleTheme = () => {
@@ -14,10 +109,11 @@ const toggleTheme = () => {
 
 themeToggle.addEventListener('click', toggleTheme);
 
-// Initialize Theme
+// Initialize
 const savedTheme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-theme', savedTheme);
 themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+updateLanguage();
 
 // Lotto Generator Logic
 const generateNumbers = () => {
@@ -78,7 +174,10 @@ window.showOption = function(option) {
     
     document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('active'));
     // Fixed: find the button that was clicked
-    const clickedBtn = Array.from(document.querySelectorAll('.option-btn')).find(btn => btn.textContent.toLowerCase().includes(option));
+    const clickedBtn = Array.from(document.querySelectorAll('.option-btn')).find(btn => {
+        const text = btn.textContent.toLowerCase();
+        return text.includes('webcam') || text.includes('upload') || text.includes('웹캠') || text.includes('업로드');
+    });
     if (clickedBtn) clickedBtn.classList.add('active');
     
     // Stop webcam if switching to upload
@@ -143,13 +242,13 @@ if (uploadArea) {
 
 window.predictImage = async function() {
     if (!imagePreview.src || imagePreview.src.endsWith('#') || imagePreview.style.display === 'none') {
-        alert('Please upload a photo first!');
+        alert(currentLang === 'ko' ? '사진을 먼저 업로드해주세요!' : 'Please upload a photo first!');
         return;
     }
     
     await loadModel();
     labelContainer = document.getElementById('label-container');
-    labelContainer.innerHTML = 'Analyzing...';
+    labelContainer.innerHTML = currentLang === 'ko' ? '분석 중...' : 'Analyzing...';
     
     const tempImg = new Image();
     tempImg.src = imagePreview.src;
@@ -169,8 +268,8 @@ async function predict(input) {
         const percent = (prediction[i].probability * 100).toFixed(0);
         let className = prediction[i].className;
         
-        if (className === 'Class 1') className = 'Dog';
-        if (className === 'Class 2') className = 'Cat';
+        if (className === 'Class 1') className = currentLang === 'ko' ? '강아지상' : 'Dog';
+        if (className === 'Class 2') className = currentLang === 'ko' ? '고양이상' : 'Cat';
         
         labelContainer.childNodes[i].innerHTML = `
             <div class="bar-container">

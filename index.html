@@ -20,28 +20,31 @@
         <nav class="nav">
             <div class="logo">Animal Look & Lotto</div>
             <ul class="nav-links">
-                <li><a href="#animal-test">Animal Test</a></li>
-                <li><a href="#lotto-generator">Lotto</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#animal-test" data-i18n="nav_animal">Animal Test</a></li>
+                <li><a href="#lotto-generator" data-i18n="nav_lotto">Lotto</a></li>
+                <li><a href="#about" data-i18n="nav_about">About</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
             </ul>
         </nav>
-        <button id="theme-toggle" class="theme-toggle">🌙</button>
+        <div class="header-actions">
+            <button id="lang-toggle" class="lang-toggle">🇰🇷 KO</button>
+            <button id="theme-toggle" class="theme-toggle">🌙</button>
+        </div>
     </header>
 
     <main class="container">
         <section id="animal-test" class="section">
-            <h1 class="title">Animal Look Test</h1>
-            <p class="description">Discover which animal you resemble most! Using advanced AI technology from Google's Teachable Machine, our tool analyzes your facial features to find your animal counterpart. Whether it's the playful spirit of a dog or the elegant grace of a cat, find out now!</p>
+            <h1 class="title" data-i18n="title_animal">Animal Look Test</h1>
+            <p class="description" data-i18n="desc_animal">Discover which animal you resemble most! Using advanced AI technology from Google's Teachable Machine, find out if you have the playful spirit of a dog or the elegant grace of a cat.</p>
             
             <section class="animal-test-section">
                 <div class="test-options">
-                    <button type="button" class="option-btn active" onclick="showOption('webcam')">Webcam</button>
-                    <button type="button" class="option-btn" onclick="showOption('upload')">Upload Photo</button>
+                    <button type="button" class="option-btn active" onclick="showOption('webcam')" data-i18n="webcam_btn">Webcam</button>
+                    <button type="button" class="option-btn" onclick="showOption('upload')" data-i18n="upload_btn">Upload Photo</button>
                 </div>
 
                 <div id="webcam-option" class="test-option-content">
-                    <button type="button" class="test-btn" id="webcam-start-btn" onclick="initAnimalModel()">Start Webcam</button>
+                    <button type="button" class="test-btn" id="webcam-start-btn" onclick="initAnimalModel()" data-i18n="webcam_btn">Start Webcam</button>
                     <div id="webcam-container" class="webcam-container"></div>
                 </div>
 
@@ -49,11 +52,11 @@
                     <div class="upload-area" id="upload-area">
                         <input type="file" id="image-upload" accept="image/*" hidden>
                         <div class="upload-label">
-                            <span>Click or Drag & Drop Photo</span>
+                            <span data-i18n="upload_label">Click or Drag & Drop Photo</span>
                         </div>
                         <img id="image-preview" src="#" alt="Preview" style="display: none;">
                     </div>
-                    <button type="button" class="test-btn" id="predict-btn" onclick="predictImage()">Analyze Uploaded Photo</button>
+                    <button type="button" class="test-btn" id="predict-btn" onclick="predictImage()" data-i18n="analyze_btn">Analyze Uploaded Photo</button>
                 </div>
 
                 <div id="label-container" class="label-container"></div>
@@ -76,49 +79,64 @@
         <hr class="divider">
 
         <section id="lotto-generator" class="section">
-            <h1 class="title">Lotto Number Generator</h1>
-            <p class="description">Feeling lucky? Use our random number generator to pick your next winning set of numbers. Our algorithm ensures a fair and unbiased selection, helping you try your luck with a completely fresh perspective.</p>
+            <h1 class="title" data-i18n="title_lotto">Lotto Number Generator</h1>
+            <p class="description" data-i18n="desc_lotto">Feeling lucky? Use our random number generator to pick your next winning set of numbers. Our algorithm ensures a fair and unbiased selection.</p>
             <section class="number-display"></section>
-            <button class="generate-btn">Generate Numbers</button>
+            <button class="generate-btn" data-i18n="generate_btn">Generate Numbers</button>
         </section>
         
         <hr class="divider">
         
         <section id="about" class="section about-section">
-            <h2 class="subtitle">About Our Tools</h2>
+            <h2 class="subtitle" data-i18n="subtitle_about">About & Tips</h2>
             <div class="about-content">
-                <p>Our platform is dedicated to providing fun and interactive tools for everyday use. We combine modern web technologies with a user-centric design to ensure a high-quality experience.</p>
-                <p><strong>Animal Look Test:</strong> This tool uses a pre-trained machine learning model from Google's Teachable Machine. It processes your image locally in your browser, ensuring that your privacy is maintained while providing instant feedback.</p>
-                <p><strong>Lotto Generator:</strong> A simple yet effective tool for those who enjoy the thrill of the lottery. It generates 6 unique numbers between 1 and 45, following standard lottery formats.</p>
+                <p data-i18n="about_text">Our platform is dedicated to providing fun and interactive tools for everyday use with high-quality experience.</p>
+                
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h3 data-i18n="animal_tip_title">Animal Test Tips:</h3>
+                        <ul>
+                            <li data-i18n="animal_tip_1">Best results in bright environments facing forward.</li>
+                            <li data-i18n="animal_tip_2">Try removing glasses or hats for better accuracy.</li>
+                        </ul>
+                    </div>
+                    <div class="tip-card">
+                        <h3 data-i18n="lotto_tip_title">Lotto Generator Info:</h3>
+                        <ul>
+                            <li data-i18n="lotto_tip_1">Generates 6 unique numbers between 1 and 45.</li>
+                            <li data-i18n="lotto_tip_2">Numbers are for entertainment and don't guarantee winning.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
         <hr class="divider">
 
         <section id="contact" class="contact-section section">
-            <h2 class="subtitle">Affiliate Inquiry</h2>
-            <p class="description">Have questions, feedback, or business inquiries? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.</p>
+            <h2 class="subtitle" data-i18n="subtitle_contact">Affiliate Inquiry</h2>
+            <p class="description" data-i18n="desc_contact">Have questions, feedback, or business inquiries? Fill out the form below and we'll get back to you soon.</p>
             <form action="https://formspree.io/f/xaqdpeev" method="POST" class="contact-form">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Your name">
+                    <label for="name" data-i18n="form_name">Name</label>
+                    <input type="text" id="name" name="name" required data-i18n="form_name">
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    <label for="email" data-i18n="form_email">Email</label>
+                    <input type="email" id="email" name="email" required data-i18n="form_email">
                 </div>
                 <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required placeholder="How can we collaborate?"></textarea>
+                    <label for="message" data-i18n="form_message">Message</label>
+                    <textarea id="message" name="message" required data-i18n="form_message"></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Send Inquiry</button>
+                <button type="submit" class="submit-btn" data-i18n="form_submit">Send Inquiry</button>
             </form>
         </section>
 
         <hr class="divider">
 
         <section class="comment-section section">
-            <h2 class="subtitle">Comments</h2>
+            <h2 class="subtitle" data-i18n="subtitle_comments">Comments</h2>
             <div id="disqus_thread"></div>
             <script>
                 (function() { 
@@ -134,10 +152,10 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <p>&copy; 2026 Animal Look & Lotto. All rights reserved.</p>
+            <p>&copy; 2026 Animal Look & Lotto. <span data-i18n="footer_rights">All rights reserved.</span></p>
             <ul class="footer-links">
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="privacy.html" data-i18n="privacy">Privacy Policy</a></li>
+                <li><a href="terms.html" data-i18n="terms">Terms of Service</a></li>
             </ul>
         </div>
     </footer>
